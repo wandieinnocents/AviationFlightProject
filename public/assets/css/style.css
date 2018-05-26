@@ -14,6 +14,12 @@
   Searching css for the data
 */
 
+.row-yellow {
+   background-color: yellow;
+}
+.row-red {
+   background-color: red;
+}
 
 
 #myInput {
@@ -3089,7 +3095,7 @@ background-color: #f1f1f1;
      padding: 2px 1px;
      background: #ffffff;
      margin-top: 50px;
-     
+
 }
  fieldset, label {
      margin: 0;
@@ -6413,7 +6419,7 @@ background-color: #f1f1f1;
      background: url('../images/mm-col-bg.html') no-repeat right bottom, #fff;
      z-index: 999;
     /* margin-top: 10px;*/
-     
+
       /*padding: -150px 6px;*/
       padding-top: 0px;
      /* new

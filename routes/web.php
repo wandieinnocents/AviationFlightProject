@@ -12,6 +12,8 @@
 */
 use App\Models\Hotel;
 
+
+
 Route::get('/', function () {
 
   $rUrl = 'https://easyflightt.herokuapp.com/api/enroute/ebb';
@@ -29,6 +31,8 @@ Route::get('/', function () {
    $hotels = Hotel::all();
 
    return view('welcome',compact('hotels','data','data_departures'));
+   // return view('welcome',['data' =>$data , 'data_departures'=> $data_departures, 'controller' => $this]);
+
 
 });
 

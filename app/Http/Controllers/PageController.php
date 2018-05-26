@@ -36,8 +36,9 @@ class PageController extends Controller
     // $array_reduce($array, 'array_merge', array());
 
     //dd($lastTrack);
+    //dd($inFlightInfo);
     return $inFlightInfo;
-    // dd($inFlightInfo);
+
   }
 
 
@@ -95,6 +96,7 @@ class PageController extends Controller
     // $data = dd(json_decode(file_get_contents($rUrl), true));
 
     // return view('pages.flight')->withData($data);
+
    return view('pages.flight',['data' =>$data , 'data_departures'=> $data_departures, 'controller' => $this]);
 
   }

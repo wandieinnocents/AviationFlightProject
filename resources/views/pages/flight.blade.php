@@ -155,7 +155,10 @@
                     <?php
 
 
+                    // $status_info=$controller->status(str_limit($dat['ident'], $limit = 3, $end = ''));
                     $status_info=$controller->status(str_limit($dat['ident'], $limit = 3, $end = ''));
+
+
 
                     $status_info=$status_info[0];
 
@@ -178,17 +181,18 @@
                       $status="Departed";
                     }
 
-                    //variables for date addition
+
 
                     else if(date("m-d-Y h:i:s",$status_info->estimatedarrivaltime) >
 
                       (
-                        // $status_info->filed_departuretime 
 
-                       // date("m-d-Y h:i:s",$status_info->filed_departuretime)
+                      //  $status_info->filed_departuretime +
+
+                       strtotime(date("m-d-Y h:i:s",$status_info->filed_departuretime)) +
 
 
-                          \Carbon\Carbon::createFromFormat('H:i:s', $status_info->filed_ete)->addMinutes(15)
+                         strtotime(  \Carbon\Carbon::createFromFormat('H:i:s', $status_info->filed_ete)->addMinutes(15))
 
 
 
@@ -198,22 +202,24 @@
                       $status="Delayed";
 
                     }
+                    // dd($status_info->estimatedarrivaltime);
 
                     else{
                       $status = "Scheduled";
+                      $tdStyle='background-color:green;';
+
                     }
-
-                    // dd(\Carbon\Carbon::createFromFormat('m/d/Y H:i:s', $status_info->filed_departuretime));
-
-                     ?>
+                    ?>
                       <tr>
                         <td><img src="{{get_icon_url(str_limit($dat['ident'], $limit = 3, $end = ''))}}" style="width: 100px;height:60px;"></td>
                         <td>{{ $dat['ident'] }}</td>
                         <td>{{ $dat['aircrafttype'] }}</td>
                         <td>{{  date("M-dS-Y  h:i A",$dat['filed_departuretime']) }}</td>
-                        <td>{{ date("M-dS-Y  h:i A", $dat['estimatedarrivaltime']) }}</td>
+                        <td >{{ date("M-dS-Y  h:i A", $dat['estimatedarrivaltime']) }}</td>
                         <td>{{ $dat['origin'] }} - {{ $dat['originName'] }} </td>
                         <td>{{ $dat['destination'] }} - {{ $dat['destinationName'] }} </td>
+
+
 
                         <td>
 
@@ -253,10 +259,64 @@
               <tbody>
                 @foreach($data_departures as $dat)
 
-                <?php
-                $status = "pending";
 
-                ?>
+                                    <?php
+
+
+                                    $status_info=$controller->status(str_limit($dat['ident'], $limit = 3, $end = ''));
+
+                                    $status_info=$status_info[0];
+
+                                    $status="";
+
+                                    if($status_info->actualdeparturetime==-1)
+                                    {
+                                      $status="Cancelled";
+
+                                    }
+
+
+                                      else if($status_info->actualarrivaltime>0){
+
+                                      $status="Arrived";
+
+                                    }
+                                     else if($status_info->actualdeparturetime>0){
+
+                                      $status="Departed";
+                                    }
+
+                                    //variables for date addition
+
+
+                                    else if(date("m-d-Y h:i:s",$status_info->estimatedarrivaltime) >
+
+                                      (
+
+                                      //  $status_info->filed_departuretime +
+
+                                       strtotime(date("m-d-Y h:i:s",$status_info->filed_departuretime)) +
+
+
+                                         strtotime(  \Carbon\Carbon::createFromFormat('H:i:s', $status_info->filed_ete)->addMinutes(15))
+
+
+
+                                          )){
+
+
+                                      $status="Delayed";
+
+                                    }
+                                    // dd($status_info->estimatedarrivaltime);
+
+                                    else{
+                                      $status = "Scheduled";
+                                      $tdStyle='background-color:green;';
+
+                                    }
+
+                                     ?>
 
                 <tr>
 
@@ -267,7 +327,8 @@
                   <td>{{ date("M-dS-Y  h:i A", $dat['estimatedarrivaltime']) }}</td>
                   <td>{{ $dat['origin'] }} - {{ $dat['originName'] }} </td>
                   <td>{{ $dat['destination'] }} - {{ $dat['destinationName'] }} </td>
-                  {{-- <td>{{$status}} </td> --}}
+
+                  <td>{{$status}} </td>
                 </tr>
                 @endforeach
 

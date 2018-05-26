@@ -36,6 +36,7 @@
 													<th>ARRIVAL TIME</th>
 													<th>ORIGIN</th>
 													<th>DESTINATION</th>
+													<th>STATUS</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -46,6 +47,10 @@
                         <!-- loop the data from here -->
 												@foreach($data as $dat)
 
+												<!-- CODE TO COMPUTE STATUS  -->
+
+
+												<!-- END OF CODES TO COMPUTE THE STATUS -->
                         <tr>
 													<td><img src="{{get_icon_url(str_limit($dat['ident'], $limit = 3, $end = ''))}}" style="width: 100px;height:60px;"></td>
 													<td>{{ $dat['ident'] }}</td>
@@ -54,6 +59,7 @@
 							            <td>{{ date("M-dS-Y  h:i A", $dat['estimatedarrivaltime']) }}</td>
 							            <td>{{ $dat['origin'] }} - {{ $dat['originName'] }} </td>
 							            <td>{{ $dat['destination'] }} - {{ $dat['destinationName'] }} </td>
+
                         </tr>
 												@endforeach
 
