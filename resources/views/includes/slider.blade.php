@@ -49,6 +49,59 @@
 
 												<!-- CODE TO COMPUTE STATUS  -->
 
+												<?php
+
+
+		                    // $status_info=$controller->status(str_limit($dat['ident'], $limit = 3, $end = ''));
+
+		                    $status_info=$controller->status(str_limit($dat['ident'], $limit = 3, $end = ''));
+
+
+
+		                    $status_info=$status_info[0];
+
+		                    $status="";
+
+		                    if($status_info->actualdeparturetime==-1)
+		                    {
+		                      $status="Cancelled";
+
+		                    }
+
+
+		                      else if($status_info->actualarrivaltime>0){
+
+		                      $status="Arrived";
+
+		                    }
+		                     else if($status_info->actualdeparturetime>0){
+
+		                      $status="Departed";
+		                    }
+
+
+
+		                    else if(date("m-d-Y h:i:s",$status_info->estimatedarrivaltime) >
+
+		                      (
+
+		                      //  $status_info->filed_departuretime +
+
+		                       strtotime(date("m-d-Y h:i:s",$status_info->filed_departuretime)) +
+                           strtotime(  \Carbon\Carbon::createFromFormat('H:i:s', $status_info->filed_ete)->addMinutes(15))
+                             )){
+ 													 $status="Delayed";
+
+		                    }
+		                    // dd($status_info->estimatedarrivaltime);
+
+		                    else{
+		                      $status = "Scheduled";
+		                      $tdStyle='background-color:green;';
+
+		                    }
+		                    ?>
+
 
 												<!-- END OF CODES TO COMPUTE THE STATUS -->
                         <tr>
@@ -59,6 +112,7 @@
 							            <td>{{ date("M-dS-Y  h:i A", $dat['estimatedarrivaltime']) }}</td>
 							            <td>{{ $dat['origin'] }} - {{ $dat['originName'] }} </td>
 							            <td>{{ $dat['destination'] }} - {{ $dat['destinationName'] }} </td>
+													<td>{{ $status }}</td>
 
                         </tr>
 												@endforeach

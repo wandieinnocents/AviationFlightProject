@@ -14,28 +14,33 @@ use App\Models\Hotel;
 
 
 
-Route::get('/', function () {
+ 
 
-  $rUrl = 'https://easyflightt.herokuapp.com/api/enroute/ebb';
-  //departures
-  $rUrl2 = 'https://easyflightt.herokuapp.com/api/scheduled/ebb';
+//
+// Route::get('/',  function () {
+//
+//
+//   $rUrl = 'https://easyflightt.herokuapp.com/api/enroute/ebb';
+//   //departures
+//   $rUrl2 = 'https://easyflightt.herokuapp.com/api/scheduled/ebb';
+//
+//    $data_arrivals = json_decode(file_get_contents($rUrl), true);
+//
+//    $data = array_slice($data_arrivals, 0, 4);
+//
+//
+//    $data_departures_to_slice = json_decode(file_get_contents($rUrl2), true);
+//    $data_departures = array_slice($data_departures_to_slice,0,4);
+//
+//    $hotels = Hotel::all();
+//
+//    // return view('welcome',compact('hotels','data','data_departures'));
+//    return view('welcome',['hotels'=>$hotels,'data' =>$data , 'data_departures'=> $data_departures, 'controller' => $this]);
+//
+//
+// });
 
-   $data_arrivals = json_decode(file_get_contents($rUrl), true);
-
-   $data = array_slice($data_arrivals, 0, 4);
-
-
-   $data_departures_to_slice = json_decode(file_get_contents($rUrl2), true);
-   $data_departures = array_slice($data_departures_to_slice,0,4);
-
-   $hotels = Hotel::all();
-
-   return view('welcome',compact('hotels','data','data_departures'));
-   // return view('welcome',['data' =>$data , 'data_departures'=> $data_departures, 'controller' => $this]);
-
-
-});
-
+Route::get('/','PageController@homepager');
 Route::get('/test','PageController@test');
 
 Route::get('/status','PageController@status');
